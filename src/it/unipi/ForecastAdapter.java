@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ForecastAdapter extends ArrayAdapter<List> {
+public class ForecastAdapter extends ArrayAdapter<List<String>> {
 	private final Context context;
 	private final List<String> values;
 

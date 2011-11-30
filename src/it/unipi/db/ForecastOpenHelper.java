@@ -23,6 +23,40 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 				TIMESTAMP + " TEXT UNIQUE, " +
 				FORECAST + " TEXT);";
 
+	
+	private String getDefaultTime(Date timestamp){
+
+		String timestamp_text = new String();
+		switch(timestamp.getDay()){
+		case 1: timestamp_text = "Mon ";break;
+		case 2: timestamp_text = "Tue ";break;
+		case 3: timestamp_text = "Wed ";break;
+		case 4: timestamp_text = "Thu ";break;
+		case 5: timestamp_text = "Fri ";break;
+		case 6: timestamp_text = "Sat ";break;
+		case 7: timestamp_text = "Sun ";break;
+		
+		}
+		
+		switch(timestamp.getMonth()){
+		case 1: timestamp_text += "Jan ";break;
+		case 2: timestamp_text += "Feb ";break;
+		case 3: timestamp_text += "Mar ";break;
+		case 4: timestamp_text += "Apr ";break;
+		case 5: timestamp_text += "May ";break;
+		case 6: timestamp_text += "Jun ";break;
+		case 7: timestamp_text += "Jul ";break;
+		case 8: timestamp_text += "Aug ";break;
+		case 9: timestamp_text += "Sep ";break;
+		case 10: timestamp_text += "Oct ";break;
+		case 11: timestamp_text += "Nov ";break;
+		case 12: timestamp_text += "Dec ";break;
+		
+		}
+		
+		timestamp_text+=(timestamp.getDate() + " " + timestamp.getHours()+ ":" + timestamp.getMinutes() );
+		return timestamp_text;
+	}
 	public ForecastOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -31,7 +65,12 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(FORECAST_TABLE_CREATE);
 		Log.d(DATABASE_NAME, "Created!");
+		insertRow( new Date(2011,11,30, 11,00), "Snowy" );
+        insertRow( new Date(2011,11,30, 12,00), "Rainy" );
+        insertRow( new Date(2011,11,30, 15,00), "Sunny" );
+        insertRow( new Date(2011,11,30, 17,00), "Cloudy" );
 	}
+	
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -41,17 +80,18 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(FORECAST_TABLE_CREATE);
 	}
 
+	
+	
 	public long insertRow(Date timestamp, String forecast) {
 		long rowId = 0;
 		ContentValues val = new ContentValues();
 		SQLiteDatabase db = getWritableDatabase();
-
+		
 		if (timestamp == null || forecast == null)
 			throw new IllegalArgumentException("insertRow() No null args here!");
-
-		//leave from timestamp usefull information
 		
-		String timestamp_text = timestamp.toString();
+		String timestamp_text = getDefaultTime(timestamp); 
+		
 		val.put(TIMESTAMP, timestamp_text);
 		val.put(FORECAST, forecast);
 
