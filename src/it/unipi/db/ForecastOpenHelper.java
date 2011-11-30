@@ -63,7 +63,7 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 		return rowId;
 	}
 
-	public Vector getForecasts() {
+	public List<String> getForecasts() {
 		SQLiteDatabase db = getReadableDatabase();
 
 		String[] PROJECTION_D = {TIMESTAMP, FORECAST};
@@ -74,14 +74,14 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 					null, null, null,  DEFAULT_SORT_ORDER);
 		Log.d(DATABASE_NAME, "Selection gave " + c.getCount() + " rows");
 
-		Vector<String[]> aResults = new Vector<String[]>();
+		List<String> aResults = new ArrayList<String>();
 		if (!c.moveToFirst()) {
 			c.close();
 			return null;
 		}
 		do {
-        String[] row = new String[]{ c.getString(c.getColumnIndexOrThrow(TIMESTAMP)),
-                                     c.getString(c.getColumnIndexOrThrow(FORECAST))};
+        String row = new String(c.getString(c.getColumnIndexOrThrow(TIMESTAMP))+ '\n'+
+                                     c.getString(c.getColumnIndexOrThrow(FORECAST)));
         aResults.add( row );
 		} while(c.moveToNext());
 		c.close();

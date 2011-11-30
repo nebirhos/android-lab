@@ -17,10 +17,30 @@ public class ShowForecast extends ListActivity
         dbHelper.insertRow( new Date(2011,11,30, 11,00), "Snowy" );
         dbHelper.insertRow( new Date(2011,11,30, 12,00), "Rainy" );
 
-        Vector<String[]> results = dbHelper.getForecasts();
+        List<String> results = dbHelper.getForecasts();
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>( this,
+        		R.layout.rowlayout, R.id.label,
+                results ) ;
+        
+        setListAdapter( adapter);
 
-        setListAdapter( new ArrayAdapter<String>( this,
-                                                  android.R.layout.simple_list_item_1,
-                                                  results.firstElement() ) );
-    }
+        
+        
+    }/*
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
+		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+				"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+				"Linux", "OS/2" };
+		// Use your own layout
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.rowlayout, R.id.label, values);
+		setListAdapter(adapter);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		String item = (String) getListAdapter().getItem(position);
+		Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
+	}*/
 }
