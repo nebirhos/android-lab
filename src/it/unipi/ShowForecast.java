@@ -17,23 +17,28 @@ public class ShowForecast extends ListActivity
         ForecastOpenHelper dbHelper = new ForecastOpenHelper(this);
         
         
-        /**/
-       dbHelper.insertRow( new Date(2011,11,30, 11,00), "Snowy" );
-        List<String> results = dbHelper.getForecasts();
-        ForecastAdapter adapter = new ForecastAdapter(this, results);
+        /*This instruction has used just for test. Once the db has been created it is saved
+         * on the device permanently.
+         * For this reason the initial List of condition time is in ForecastOpenHelper class 
+         * (in the onCreate() method).
+          */
+       dbHelper.insertRow( new Date(2011,6,7,17,00), "Snowy" );
+       
+       
+        List<Model> results = dbHelper.getForecasts();
         
+        /*A custom adapter to represent a different picture for different condition time*/
+        ForecastAdapter adapter = new ForecastAdapter(this, results); 
         setListAdapter( adapter); 
         
     }
 
+    /*This method launch a message on screen*/
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		String item = (String) getListAdapter().getItem(position);
-		Toast hNotify = Toast.makeText(getApplicationContext(), "Qui ci vanno le info aggiuntive", Toast.LENGTH_SHORT);
+		Toast hNotify = Toast.makeText(getApplicationContext(), "Put other infos here", Toast.LENGTH_SHORT);
 		hNotify.setGravity(0 , 0 , 0 );
 		hNotify.show();
-		/*this wirite on screen addictive information*/
-		//Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
 	}
     
 }

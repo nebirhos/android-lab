@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import it.unipi.Model;
 import java.util.*;
 
 public class ForecastOpenHelper extends SQLiteOpenHelper {
@@ -24,6 +25,7 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 				FORECAST + " TEXT);";
 
 	
+	/*This class set a string that contains time informations*/
 	private String getDefaultTime(Date timestamp){
 
 		String timestamp_text = new String();
@@ -91,7 +93,7 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 			throw new IllegalArgumentException("insertRow() No null args here!");
 		
 		String timestamp_text = getDefaultTime(timestamp); 
-		
+	
 		val.put(TIMESTAMP, timestamp_text);
 		val.put(FORECAST, forecast);
 
@@ -105,26 +107,27 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 		return rowId;
 	}
 
-	public List<String> getForecasts() {
+	public List<Model> getForecasts() {
 		SQLiteDatabase db = getReadableDatabase();
 
 		String[] PROJECTION_D = {TIMESTAMP, FORECAST};
-    String SELECTION_W = "";
+		String SELECTION_W = "";
 		String DEFAULT_SORT_ORDER = TIMESTAMP + " ASC";
 
 		Cursor c = db.query(FORECAST_TABLE_NAME, PROJECTION_D, SELECTION_W,
 					null, null, null,  DEFAULT_SORT_ORDER);
 		Log.d(DATABASE_NAME, "Selection gave " + c.getCount() + " rows");
 
-		List<String> aResults = new ArrayList<String>();
+		List<Model> aResults = new ArrayList<Model>();
 		if (!c.moveToFirst()) {
 			c.close();
 			return null;
 		}
 		do {
-        String row = new String(c.getString(c.getColumnIndexOrThrow(TIMESTAMP))+ '\n'+
-                                     c.getString(c.getColumnIndexOrThrow(FORECAST)));
-        aResults.add( row );
+			String row1 = c.getString(c.getColumnIndexOrThrow(TIMESTAMP));
+			String row2 = c.getString(c.getColumnIndexOrThrow(FORECAST));
+			Model mod = new Model(row1,row2);
+			aResults.add( mod );
 		} while(c.moveToNext());
 		c.close();
 		db.close();

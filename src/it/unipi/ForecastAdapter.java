@@ -10,11 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ForecastAdapter extends ArrayAdapter<List<String>> {
+/*Custom adapter object*/
+public class ForecastAdapter extends ArrayAdapter<Model> {
 	private final Context context;
-	private final List<String> values;
+	private final List<Model> values;
 
-	public ForecastAdapter(Context context, List values) {
+	public ForecastAdapter(Context context, List<Model> values) {
 		super(context, R.layout.rowlayout, values);
 		this.context = context;
 		this.values = values;
@@ -27,20 +28,22 @@ public class ForecastAdapter extends ArrayAdapter<List<String>> {
 		View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.label);
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-		textView.setText(values.get(position));
 		
-
-		String s = values.get(position);
-		if (s.contains("Rainy"))
+		/*This instruction writes the basic info about each day*/
+		textView.setText(values.get(position).getTime() +'\n'+ values.get(position).getCondition() );
+		
+		/*Connects pictures to condition time*/
+		String s = values.get(position).getCondition();
+		if (s.equals("Rainy"))
 			imageView.setImageResource(R.drawable.rainy);
 		
-		else if (s.contains("Snowy")) 
+		else if (s.equals("Snowy")) 
 			imageView.setImageResource(R.drawable.snowy);
 		
-		else if (s.contains("Sunny")) 
+		else if (s.equals("Sunny")) 
 			imageView.setImageResource(R.drawable.sunny);
 		
-		else if (s.contains("Cloudy")) 
+		else if (s.equals("Cloudy")) 
 			imageView.setImageResource(R.drawable.cloudy);
 		
 		else imageView.setImageResource(R.drawable.asd);
