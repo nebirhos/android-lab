@@ -49,7 +49,9 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 		if (timestamp == null || forecast == null)
 			throw new IllegalArgumentException("insertRow() No null args here!");
 
-    String timestamp_text = timestamp.toString();
+		//leave from timestamp usefull information
+		
+		String timestamp_text = timestamp.toString();
 		val.put(TIMESTAMP, timestamp_text);
 		val.put(FORECAST, forecast);
 
