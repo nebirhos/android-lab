@@ -71,9 +71,15 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
         insertRow( new Date(2011,11,30, 12,00), "Rainy" );
         insertRow( new Date(2011,11,30, 15,00), "Sunny" );
         insertRow( new Date(2011,11,30, 17,00), "Cloudy" );
+        
 	}
 	
-
+	/*Delete all value of the table at the end of activity*/
+	 public void tDestroy() {
+	        SQLiteDatabase db = getWritableDatabase();
+	        db.delete(FORECAST_TABLE_NAME, null, null);
+	 }
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.w(DATABASE_NAME, "Upgrading database from version " + oldVersion + " to "

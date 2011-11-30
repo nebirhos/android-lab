@@ -10,11 +10,13 @@ import android.widget.Toast;
 
 public class ShowForecast extends ListActivity
 {
+	private ForecastOpenHelper dbHelper;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ForecastOpenHelper dbHelper = new ForecastOpenHelper(this);
+        dbHelper = new ForecastOpenHelper(this);
         
         
         /*This instruction has used just for test. Once the db has been created it is saved
@@ -32,7 +34,13 @@ public class ShowForecast extends ListActivity
         setListAdapter( adapter); 
         
     }
-
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+        dbHelper.tDestroy();
+    }
+    
     /*This method launch a message on screen*/
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
