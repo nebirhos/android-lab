@@ -67,11 +67,6 @@ public class ForecastOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(FORECAST_TABLE_CREATE);
 		Log.d(DATABASE_NAME, "Created!");
-		insertRow( new Date(2011,11,30, 11,00), "Snowy" );
-        insertRow( new Date(2011,11,30, 12,00), "Rainy" );
-        insertRow( new Date(2011,11,30, 15,00), "Sunny" );
-        insertRow( new Date(2011,11,30, 17,00), "Cloudy" );
-        
 	}
 	
 	/*Delete all value of the table at the end of activity*/

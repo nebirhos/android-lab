@@ -19,12 +19,13 @@ public class ShowForecast extends ListActivity
         dbHelper = new ForecastOpenHelper(this);
         
         
-        /*This instruction has used just for test. Once the db has been created it is saved
-         * on the device permanently.
-         * For this reason the initial List of condition time is in ForecastOpenHelper class 
-         * (in the onCreate() method).
+        /* Le cazzo di insert vanno messe qua. Vengono cancellate con la onDestroy()
           */
        dbHelper.insertRow( new Date(2011,6,7,17,00), "Snowy" );
+       dbHelper.insertRow( new Date(2011,11,30, 11,00), "Snowy" );
+       dbHelper.insertRow( new Date(2011,11,30, 12,00), "Rainy" );
+       dbHelper.insertRow( new Date(2011,11,30, 15,00), "Sunny" );
+       dbHelper.insertRow( new Date(2011,11,30, 17,00), "Cloudy" );
        
        
         List<Model> results = dbHelper.getForecasts();
@@ -34,11 +35,11 @@ public class ShowForecast extends ListActivity
         setListAdapter( adapter); 
         
     }
-    
+
     @Override
     public void onDestroy() {
     	super.onDestroy();
-        dbHelper.tDestroy();
+      dbHelper.tDestroy();
     }
     
     /*This method launch a message on screen*/

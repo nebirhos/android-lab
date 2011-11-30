@@ -13,7 +13,7 @@ public class Model {
 	public String getTime() {
 		return time;
 	}
-	
+
 	public String getCondition() {
 		return condition;
 	}
