@@ -22,15 +22,19 @@ public class ShowForecasts extends ListActivity {
         super.onCreate(savedInstanceState);
         dbHelper = new DatabaseHelper(this);
        
-        // Inserting some random data, just for example
-        dbHelper.insertRow( new Date(2011,6,7,17,00), "Snowy" );
-        dbHelper.insertRow( new Date(2011,11,30, 11,00), "Snowy" );
-        dbHelper.insertRow( new Date(2011,11,30, 12,00), "Rainy" );
-        dbHelper.insertRow( new Date(2011,11,30, 15,00), "Sunny" );
-        dbHelper.insertRow( new Date(2011,11,30, 17,00), "Cloudy" );
+        // Inserting some random data for a day, just for example
+        Date now = new Date();
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours(),   0), -3, "Snowy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+1, 0), -2, "Snowy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+2, 0),  0, "Rainy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+3, 0),  5, "Rainy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+4, 0),  6, "Cloudy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+5, 0),  6, "Cloudy") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+6, 0),  6, "Sunny") );
+        dbHelper.insertRow( new Forecast(new Date(now.getYear(), now.getMonth(), now.getDate(), now.getHours()+7, 0),  5, "Cloudy") );
 
         // Get weather forecasts
-        List<Forecast> results = dbHelper.getForecasts();
+        List<Forecast> results = dbHelper.getForecasts( now );
 
         // A custom adapter to represent a different picture for different condition time
         ForecastAdapter adapter = new ForecastAdapter(this, results); 

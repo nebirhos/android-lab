@@ -32,8 +32,8 @@ public class ForecastAdapter extends ArrayAdapter<Forecast> {
       ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
       // This instruction writes the basic info about each day
-      textView.setText( values.get(position).getTime() + '\n' +
-                        values.get(position).getDescription() );
+      textView.setText( values.get(position).getDatetimeString() + '\n' +
+                        values.get(position).getDescriptionString() );
 
       // Connects pictures to weather conditions
       String s = values.get(position).getDescription();
