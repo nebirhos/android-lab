@@ -2,8 +2,10 @@ package it.unipi;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
+
 import android.widget.Toast;
 
 import java.util.*;
@@ -48,11 +50,16 @@ public class ShowForecasts extends ListActivity {
       dbHelper.resetDatabase();
     }
 
-    /** This method launch a message on screen */
+    /** This method launch a toast message on screen */
     @Override
     protected void onListItemClick( ListView list, View view, int position, long id ) {
-        Toast hNotify = Toast.makeText( getApplicationContext(), "Put other infos here", Toast.LENGTH_SHORT );
-        hNotify.setGravity( 0, 0, 0 );
+    	super.onListItemClick(list, view, position, id);
+		Forecast obj = (Forecast)this.getListAdapter().getItem(position);
+		String info =obj.getDescriptionString() + " , " + obj.getTemperatureString();
+        Toast hNotify = Toast.makeText( getApplicationContext(), info, Toast.LENGTH_SHORT );
+        hNotify.setGravity( Gravity.CENTER_VERTICAL , 0, 0 );
         hNotify.show();
+    	
+
     }
 }
