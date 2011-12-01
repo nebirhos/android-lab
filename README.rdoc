@@ -1,0 +1,13 @@
+= Yet Another Useful Weather App
+
+The weather report app you always wanted!
+
+Created as a laboratory excercise for the Android class held by Alberto Panizzo.
+
+== Authors
+* Nilo Redini
+* Francesco Disperati
+* Davide Pellegrino
+
+== Changelog
+* 2011-11-30: project started
