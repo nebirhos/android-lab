@@ -89,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
         do {
-            Forecast f = new Forecast( c.getInt(c.getColumnIndexOrThrow(FORECAST_DATETIME)),
+            Forecast f = new Forecast( c.getLong(c.getColumnIndexOrThrow(FORECAST_DATETIME)),
                                        c.getInt(c.getColumnIndexOrThrow(FORECAST_TEMPERATURE)),
                                        c.getString(c.getColumnIndexOrThrow(FORECAST_DESCRIPTION)) );
             aForecasts.add( f );

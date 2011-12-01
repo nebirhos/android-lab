@@ -1,7 +1,7 @@
-
 package it.unipi.models;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 /**
  * Store forecasts data
@@ -32,7 +32,8 @@ public class Forecast {
 
     /** Output getters */
     public String getDatetimeString() {
-        return datetime.toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm, E dd MMM yyyy");
+        return formatter.format( datetime );
     }
 
     public String getDescriptionString() {
