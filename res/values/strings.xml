@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Yet Another Useful Weather App</string>
+     <string name="extra_infos">More infos</string>
 </resources>

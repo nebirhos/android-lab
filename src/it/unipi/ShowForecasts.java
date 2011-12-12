@@ -1,21 +1,17 @@
 package it.unipi;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ListView;
-
-import android.widget.Toast;
-
+import android.view.ViewGroup;
 import java.util.*;
-
 import it.unipi.db.*;
 import it.unipi.models.*;
 import it.unipi.ForecastAdapter;
 
 
-public class ShowForecasts extends ListActivity {
+public class ShowForecasts extends ListActivity implements View.OnClickListener {
     private DatabaseHelper dbHelper;
 
     /** Called when the activity is first created. */
@@ -38,28 +34,29 @@ public class ShowForecasts extends ListActivity {
         // Get weather forecasts
         List<Forecast> results = dbHelper.getForecasts( now );
 
-        // A custom adapter to represent a different picture for different condition time
-        ForecastAdapter adapter = new ForecastAdapter(this, results); 
-        setListAdapter( adapter); 
+        setListAdapter(new ForecastAdapter(this,
+				results) {
+			@Override
+			public View getView(int position, View convertView,
+					ViewGroup parent) {
+				View view = super.getView(position, convertView, parent);
+				view.setTag(Integer.valueOf(position));
+				view.setOnClickListener(ShowForecasts.this);
+				return view;
+			}
+        });
     }
 
-    @Override
-    public void onDestroy() {
-    	super.onDestroy();
-      // Delete previously inserted data
-      dbHelper.resetDatabase();
-    }
 
-    /** This method launch a toast message on screen */
-    @Override
-    protected void onListItemClick( ListView list, View view, int position, long id ) {
-    	super.onListItemClick(list, view, position, id);
+	@Override
+	public void onClick(View arg) {
+		Intent i = new Intent(ShowForecasts.this,ExtraInfos.class);
+		int position = ((Integer)arg.getTag()).intValue();
 		Forecast obj = (Forecast)this.getListAdapter().getItem(position);
-		String info =obj.getDescriptionString() + " , " + obj.getTemperatureString();
-        Toast hNotify = Toast.makeText( getApplicationContext(), info, Toast.LENGTH_SHORT );
-        hNotify.setGravity( Gravity.CENTER_VERTICAL , 0, 0 );
-        hNotify.show();
-    	
-
-    }
+        String info =obj.getDescriptionString() + " , " + obj.getTemperatureString();
+		i.putExtra("infos",info); //all in one string
+		startActivity(i);
+	}
+	
+	
 }
